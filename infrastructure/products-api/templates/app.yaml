@@ -1,0 +1,6 @@
+{{- include "helm-library.deployment" . }}
+---
+{{- include "helm-library.service" . }}
+---
+{{- include "helm-library.config-map" . }}
+---

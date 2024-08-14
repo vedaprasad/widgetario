@@ -1,0 +1,10 @@
+apiVersion: v2
+name: stock-api
+description: This is the stock-api
+type: application
+version: 0.1.1
+appVersion: "0.1.0"
+dependencies:
+  - name: helm-library
+    version: 0.1.1
+    repository: file:///Users/vedu/widgetario/infrastructure/helm-library

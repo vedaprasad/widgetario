@@ -1,0 +1,14 @@
+{{- define "helm-library.service" -}}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.app_name }}-service
+  namespace: {{ default "dcj-service-tst" .Values.namespace }}
+spec:
+  selector:
+    app: {{ .Values.app_name }}
+  ports:
+  - name: http
+    port: {{ .Values.svc_port }}
+    targetPort: {{ .Values.svc_targetport }}
+{{- end -}}

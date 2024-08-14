@@ -1,0 +1,30 @@
+replicaCount: 1
+app_name: "products-api"
+namespace: "widgetario"
+svc_port: 80
+svc_targetport: 8000
+container:
+  image_name: "widgetario/products-api:21.03"
+  port: "8000"
+  livenessProbe:
+    tcpSocket:
+      port: 8000
+    initialDelaySeconds: 10
+    periodSeconds: 10
+  readinessProbe:
+    tcpSocket:
+      port: 8000
+    initialDelaySeconds: 20
+    periodSeconds: 10
+config:
+  price.factor=1.5
+  logging.level.wiredbrain.products=DEBUG
+  server.port=80
+  spring.jpa.show-sql=true
+  spring.jpa.generate-ddl=true
+  spring.jpa.hibernate.ddl-auto=update
+  spring.jpa.database=POSTGRESQL
+  spring.datasource.platform=postgres
+  spring.datasource.url=jdbc:postgresql://products-db-service.widgetario.svc.cluster.local:5432/postgres
+  spring.datasource.username=postgres
+  spring.datasource.password=m*lestone3

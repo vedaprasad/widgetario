@@ -1,0 +1,20 @@
+replicaCount: 1
+app_name: "products-db"
+namespace: "widgetario"
+svc_port: 5432
+svc_targetport: 5432
+container:
+  image_name: "widgetario/products-db:21.03"
+  port: "5432"
+  livenessProbe:
+    tcpSocket:
+      port: 5432
+    initialDelaySeconds: 10
+    periodSeconds: 10
+  readinessProbe:
+    tcpSocket:
+      port: 5432
+    initialDelaySeconds: 20
+    periodSeconds: 10
+secrets:
+  POSTGRES_PASSWORD: m*lestone3

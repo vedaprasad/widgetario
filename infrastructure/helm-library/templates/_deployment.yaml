@@ -1,0 +1,57 @@
+{{- define "helm-library.deployment" -}}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.app_name }}-deployment
+  namespace: {{ default "dcj-service-test" .Values.namespace }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ .Values.app_name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.app_name }}
+    spec:
+      containers:
+      - name: {{ .Values.app_name }}
+        image: {{ .Values.container.image_name }}
+        imagePullPolicy: Always
+        volumeMounts:
+        {{- range $v := .Values.container.volumeMounts }}
+        - name: {{ $v.name }}
+          mountPath: {{ $v.mountPath }}
+        {{- end }}
+        ports:
+        - containerPort: {{ .Values.container.port }}
+        volumeMounts:
+        livenessProbe: {{ toYaml .Values.container.livenessProbe | nindent 10 }}
+        readinessProbe: {{ toYaml .Values.container.readinessProbe | nindent 10 }}
+        resources:
+          limits:
+            cpu: 1
+            memory: 512Mi
+          requests:
+            cpu: 0.5
+            memory: 256Mi
+        securityContext:
+          readOnlyRootFilesystem: true
+          allowPrivilegeEscalation: false
+          privileged: false
+          runAsNonRoot: true
+          capabilities:
+            drop:
+              - ALL
+      volumes:
+      {{- range $volume := .Values.volumes }}
+      - name: {{ $volume.name }}
+        configMap:
+          name: {{ $volume.name }}
+      {{- range $item := $volume.configMap.item }}
+          items:
+          - key: {{ $item.key }}
+            path: {{ $item.path }}
+          {{- end }}                                                                                                                  
+      {{- end }}
+{{- end -}}

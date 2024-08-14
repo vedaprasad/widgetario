@@ -1,0 +1,36 @@
+replicaCount: 1
+app_name: "web"
+namespace: "widgetario"
+svc_port: 80
+svc_targetport: 8000
+container:
+  image_name: "widgetario/web:21.03"
+  port: "8000"
+  volumeMounts:
+  - name: web-api
+    mountPath: "/app/secrets"
+  - name: web-logging
+    mountPath: "/app/config"
+  livenessProbe:
+    tcpSocket:
+      port: 8000
+    initialDelaySeconds: 10
+    periodSeconds: 10
+  readinessProbe:
+    tcpSocket:
+      port: 8000
+    initialDelaySeconds: 20
+    periodSeconds: 10
+volumes:
+- name: web-api
+  configMap:
+    name: web-api
+    items:
+    - key: api.json
+      path: api.json
+- name: web-logging
+  configMap:
+    name: web-logging
+    items:
+    - key: logging.json
+      path: logging.json

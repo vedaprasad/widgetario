@@ -1,0 +1,6 @@
+dependencies:
+- name: helm-library
+  repository: file:///Users/vedu/widgetario/infrastructure/helm-library
+  version: 0.1.1
+digest: sha256:1e29a1733bf5219af6bc86fedfa37af64f9e9d1e7e089c1a0f61b2de2a0bde43
+generated: "2024-08-13T18:15:44.53306+10:00"

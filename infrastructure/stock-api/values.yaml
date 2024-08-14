@@ -1,0 +1,18 @@
+replicaCount: 1
+app_name: "stock-api"
+namespace: "widgetario"
+svc_port: 80
+svc_targetport: 8000
+container:
+  image_name: "widgetario/stock-api:21.03"
+  port: "8000"
+  livenessProbe:
+    tcpSocket:
+      port: 8000
+    initialDelaySeconds: 10
+    periodSeconds: 10
+  readinessProbe:
+    tcpSocket:
+      port: 8000
+    initialDelaySeconds: 20
+    periodSeconds: 10

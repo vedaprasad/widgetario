@@ -1,0 +1,6 @@
+apiVersion: v2
+name: helm-library
+description: A Helm chart for widgetario APIs
+type: library
+version: 0.1.1
+appVersion: "0.1.0"
