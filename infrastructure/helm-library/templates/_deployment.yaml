@@ -48,10 +48,9 @@ spec:
       - name: {{ $volume.name }}
         configMap:
           name: {{ $volume.name }}
-      {{- range $item := $volume.configMap.item }}
+      {{- range $item := $volume.configMap.items }}
           items:
-          - key: {{ $item.key }}
-            path: {{ $item.path }}
+            - key: {{ $items.key }}
+              path: {{ $items.path }}
           {{- end }}                                                                                                                  
       {{- end }}
-{{- end -}}
