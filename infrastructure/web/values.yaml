@@ -4,11 +4,18 @@ namespace: "widgetario"
 svc_port: 80
 svc_targetport: 8000
 configmap:
-  config.database.json: |
-    namespace.a=alpha
-    namespace.b=bravo
-    namespace.c=charlie
-  config.testblock.json: |
+  logging.json: |
+    {
+      "Serilog": {
+        "MinimumLevel": {
+          "Default": "Warning",
+          "Override": {
+            "WiredBrain": "Information"
+          }
+        }
+      }
+    }
+  api.json: |
     {
       "Widgetario": {
         "ProductsApi": {
@@ -40,13 +47,13 @@ container:
 volumes:
 - name: web-api
   configMap:
-    name: web-api
+    name: web-configmap
     items:
     - key: api.json
       path: api.json
 - name: web-logging
   configMap:
-    name: web-logging
+    name: web-configmap
     items:
     - key: logging.json
       path: logging.json

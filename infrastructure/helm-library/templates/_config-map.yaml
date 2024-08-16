@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: test
+  name: {{ .Values.app_name }}-configmap
 data: 
 {{- range $path, $config := .Values.configmap }}
   {{ $path }}: |
