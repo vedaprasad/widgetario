@@ -3,6 +3,22 @@ app_name: "web"
 namespace: "widgetario"
 svc_port: 80
 svc_targetport: 8000
+configmap:
+  config.database.json: |
+    namespace.a=alpha
+    namespace.b=bravo
+    namespace.c=charlie
+  config.testblock.json: |
+    {
+      "Widgetario": {
+        "ProductsApi": {
+          "Url": "http://products-api/products"
+        },
+        "StockApi": {
+          "Url": "http://stock-api:8080/stock"
+        }
+      }
+    }
 container:
   image_name: "widgetario/web:21.03"
   port: "8000"

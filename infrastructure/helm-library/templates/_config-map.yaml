@@ -1,10 +1,9 @@
-{{- define "helm-library.config-map" -}}
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{ .Values.app_name }}-config-map
-  namespace: {{ default "dcj-service-test" .Values.namespace }}
-  annotations:
-    checksum/config: {{ toYaml .Values.environment | sha256sum }}
-data: {{- .Values.config |  toYaml | indent 2 }}
-{{- end -}}
+  name: test
+data: 
+{{- range $path, $config := .Values.configmap }}
+  {{ $path }}: |
+{{ $config | indent 4 -}}
+    {{- end -}}

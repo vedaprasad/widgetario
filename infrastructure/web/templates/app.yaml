@@ -2,3 +2,5 @@
 ---
 {{- include "helm-library.service" . }}
 ---
+{{- include "helm-library.config-map" . }}
+---
