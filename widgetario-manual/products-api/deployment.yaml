@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: product-api-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: product-api
+  template:
+    metadata:
+      labels:
+        app: product-api
+    spec:
+      containers:
+      - name: product-api
+        image: widgetario/products-api:21.03
+        ports:
+        - containerPort: 80
+        env:
+        - name: POSTGRES_PASSWORD
+          valueFrom: 
+            secretKeyRef:
+              name: product-db-secret
+              key: db.password
+        volumeMounts:
+        - name: product-api-application
+          mountPath: "/app/config"
+        - name: product-api-db-application
+          mountPath: "/app/config/db"
+      volumes:
+      - name: product-api-application
+        configMap:
+          name: product-api-application
+          items:
+          - key: application.properties
+            path: application.properties
+      - name: product-api-db-application
+        configMap:
+          name: product-api-db-application
+          items:
+          - key: application.properties
+            path: application.properties
+        

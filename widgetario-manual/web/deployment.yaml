@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: web-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: web
+  template:
+    metadata:
+      labels:
+        app: web
+    spec:
+      containers:
+      - name: web
+        image: widgetario/web:21.03
+        ports:
+        - containerPort: 80
+        volumeMounts:
+        - name: web-api
+          mountPath: "/app/secrets"
+        - name: web-logging
+          mountPath: "/app/config"
+      volumes:
+      - name: web-api
+        configMap:
+          name: web-api
+          items:
+          - key: api.json
+            path: api.json
+      - name: web-logging
+        configMap:
+          name: web-logging
+          items:
+          - key: logging.json
+            path: logging.json
+        
